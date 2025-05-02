@@ -27,14 +27,12 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   constructor(private workspaceService: WorkspaceService) {}
   
   ngOnInit() {
-    // Subscribe to active workspace changes
     this.subscription.add(
       this.workspaceService.activeWorkspace$.subscribe(id => {
         this.activeWorkspaceId = id;
       })
     );
     
-    // Subscribe to active page changes
     this.subscription.add(
       this.workspaceService.activePage$.subscribe(() => {
         this.activePage = this.workspaceService.getActivePage();
@@ -77,7 +75,6 @@ export class WorkspaceComponent implements OnInit, OnDestroy {
   addNewBlock() {
     if (!this.activePage || this.activePage.blocks.length === 0) return;
     
-    // Add after the last block
     const lastBlock = this.activePage.blocks[this.activePage.blocks.length - 1];
     this.workspaceService.addBlock(this.activePage.id, lastBlock.id, 'after');
   }

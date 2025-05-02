@@ -1,6 +1,9 @@
 # NotionPrototype
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+This project is a part of my attempts at cloning existing apps, by taking their functionalities and applying logic to my own system. In no way shape of form are they intended to be used as an alternative to the real deal. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.5.
+
+## Demo Picture
+![Demo screen of the project](image.png)
 
 ## Development server
 

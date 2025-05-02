@@ -32,7 +32,6 @@ export class WorkspaceService {
   
   private loadFromStorage() {
     if (!this.isBrowser) {
-      // Skip localStorage operations when running on server
       return;
     }
     
@@ -41,8 +40,7 @@ export class WorkspaceService {
       try {
         const data = JSON.parse(storedData);
         this.workspacesSubject.next(data);
-        
-        // Set active workspace and page if available
+
         if (data.length > 0) {
           this.activeWorkspaceSubject.next(data[0].id);
           
@@ -216,24 +214,51 @@ export class WorkspaceService {
     
     return workspace.pages.find(p => p.id === activePageId) || null;
   }
-  
-  addBlock(pageId: string, blockId: string, position: 'before' | 'after') {
+
+  createInitialBlock(pageId: string): string | null {
     const workspaces = [...this.workspacesSubject.value];
     const activeWorkspaceId = this.activeWorkspaceSubject.value;
     
-    if (!activeWorkspaceId) return;
+    if (!activeWorkspaceId) return null;
     
     const workspaceIndex = workspaces.findIndex(w => w.id === activeWorkspaceId);
-    if (workspaceIndex === -1) return;
+    if (workspaceIndex === -1) return null;
     
     const pageIndex = workspaces[workspaceIndex].pages.findIndex(p => p.id === pageId);
-    if (pageIndex === -1) return;
+    if (pageIndex === -1) return null;
+    
+    const newBlock: Block = {
+      id: uuidv4(),
+      type: 'text',
+      content: ''
+    };
+    
+    workspaces[workspaceIndex].pages[pageIndex].blocks = [newBlock];
+    workspaces[workspaceIndex].pages[pageIndex].updatedAt = new Date();
+    
+    this.workspacesSubject.next(workspaces);
+    this.saveToStorage();
+    
+    return newBlock.id;
+  }
+  
+  addBlock(pageId: string, blockId: string, position: 'before' | 'after'): string | null {
+    const workspaces = [...this.workspacesSubject.value];
+    const activeWorkspaceId = this.activeWorkspaceSubject.value;
+    
+    if (!activeWorkspaceId) return null;
+    
+    const workspaceIndex = workspaces.findIndex(w => w.id === activeWorkspaceId);
+    if (workspaceIndex === -1) return null;
+    
+    const pageIndex = workspaces[workspaceIndex].pages.findIndex(p => p.id === pageId);
+    if (pageIndex === -1) return null;
     
     const page = workspaces[workspaceIndex].pages[pageIndex];
     const blocks = [...page.blocks];
     const blockIndex = blocks.findIndex(b => b.id === blockId);
     
-    if (blockIndex === -1) return;
+    if (blockIndex === -1) return null;
     
     const newBlock: Block = {
       id: uuidv4(),

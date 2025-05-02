@@ -1,4 +1,3 @@
-// src/app/models/block.model.ts
 export type BlockType = 'text' | 'heading1' | 'heading2' | 'heading3' | 'todo' | 'bulleted-list' | 'numbered-list' | 'code' | 'quote' | 'divider';
 
 export interface Block {
@@ -6,7 +5,7 @@ export interface Block {
   type: BlockType;
   content: string;
   children?: Block[];
-  checked?: boolean; // For todo blocks
+  checked?: boolean;
 }
 
 export interface Page {

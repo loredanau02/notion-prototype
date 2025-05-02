@@ -1,21 +1,20 @@
-<!-- src/app/workspace/workspace.component.html -->
 <div class="workspace" *ngIf="activePage">
   <div class="page-header">
-    <div class="page-emoji" *ngIf="activePage.emoji">{{ activePage.emoji }}</div>
-    <h1 
-      class="page-title" 
-      contenteditable="true"
-      (input)="onTitleChange($event)"
-      [innerHTML]="activePage.title">
+    
+    <h1 class="page-title" 
+        contenteditable="true"
+        (input)="onTitleChange($event)"
+        [innerHTML]="activePage.title">
     </h1>
     <div class="page-metadata">
-      Last edited {{ activePage.updatedAt | date:'short' }}
+      Last edited {{ activePage.updatedAt | date:'MMM d, y, h:mm a' }}
     </div>
   </div>
   
   <div class="blocks-container">
     <app-block
       *ngFor="let block of activePage.blocks"
+      [attr.data-block-id]="block.id"
       [block]="block"
       (blockChange)="onBlockChange($event)"
       (blockDelete)="onBlockDelete($event)"
@@ -23,13 +22,15 @@
     </app-block>
   </div>
   
-  <button mat-fab class="add-block-button" (click)="addNewBlock()">
+  <button mat-fab class="add-block-button" 
+          (click)="addNewBlock()" 
+          matTooltip="Add a block">
     <mat-icon>add</mat-icon>
   </button>
 </div>
 
 <div class="empty-state" *ngIf="!activePage">
-  <mat-icon>note</mat-icon>
+  <mat-icon>description</mat-icon>
   <h2>No page selected</h2>
-  <p>Select a page from the sidebar or create a new one.</p>
+  <p>Select a page from the sidebar or create a new one to get started.</p>
 </div>
