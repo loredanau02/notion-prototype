@@ -1,11 +1,35 @@
-<div class="workspace">
-  <mat-card
-    class="block"
-    *ngFor="let block of blocks"
-    cdkDrag
-  >
-    <mat-card-content>
-      <app-editor></app-editor>
-    </mat-card-content>
-  </mat-card>
+<!-- src/app/workspace/workspace.component.html -->
+<div class="workspace" *ngIf="activePage">
+  <div class="page-header">
+    <div class="page-emoji" *ngIf="activePage.emoji">{{ activePage.emoji }}</div>
+    <h1 
+      class="page-title" 
+      contenteditable="true"
+      (input)="onTitleChange($event)"
+      [innerHTML]="activePage.title">
+    </h1>
+    <div class="page-metadata">
+      Last edited {{ activePage.updatedAt | date:'short' }}
+    </div>
+  </div>
+  
+  <div class="blocks-container">
+    <app-block
+      *ngFor="let block of activePage.blocks"
+      [block]="block"
+      (blockChange)="onBlockChange($event)"
+      (blockDelete)="onBlockDelete($event)"
+      (blockAdd)="onBlockAdd($event)">
+    </app-block>
+  </div>
+  
+  <button mat-fab class="add-block-button" (click)="addNewBlock()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+<div class="empty-state" *ngIf="!activePage">
+  <mat-icon>note</mat-icon>
+  <h2>No page selected</h2>
+  <p>Select a page from the sidebar or create a new one.</p>
 </div>

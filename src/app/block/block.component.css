@@ -1,0 +1,101 @@
+/* src/app/block/block.component.css */
+.block-container {
+    position: relative;
+    margin-bottom: 10px;
+    transition: all 0.2s ease;
+  }
+  
+  .block-container.focused {
+    background-color: #f8f9fa;
+    border-radius: 4px;
+  }
+  
+  .block-handle {
+    position: absolute;
+    left: -40px;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .block-container:hover .block-handle {
+    opacity: 1;
+  }
+  
+  .block-content {
+    min-height: 24px;
+    outline: none;
+    padding: 8px 0;
+  }
+  
+  /* Block type specific styles */
+  .block-heading1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+  
+  .block-heading2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+  
+  .block-heading3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .block-todo {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .block-bulleted-list, .block-numbered-list {
+    margin-left: 24px;
+  }
+  
+  .block-code {
+    background-color: #f5f5f5;
+    padding: 12px;
+    border-radius: 4px;
+    font-family: monospace;
+  }
+  
+  .block-quote {
+    border-left: 4px solid #ddd;
+    padding-left: 16px;
+    font-style: italic;
+    color: #555;
+  }
+  
+  .block-divider hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 24px 0;
+  }
+  
+  .block-controls {
+    position: absolute;
+    right: 0;
+    top: 0;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  
+  .block-container:hover .block-controls {
+    opacity: 1;
+  }
+  
+  .block-type-menu {
+    position: absolute;
+    left: -200px;
+    top: 0;
+    width: 180px;
+    z-index: 1000;
+  }

@@ -1,0 +1,115 @@
+<div class="block-container" [class.focused]="isFocused">
+    <div class="block-handle" *ngIf="isFocused">
+      <button mat-icon-button (click)="toggleMenu()">
+        <mat-icon>drag_indicator</mat-icon>
+      </button>
+    </div>
+    
+    <div class="block-content" [ngClass]="'block-' + block.type">
+      <mat-checkbox *ngIf="block.type === 'todo'" 
+                   [checked]="block.checked" 
+                   (change)="toggleTodo()">
+      </mat-checkbox>
+      
+      <div [ngSwitch]="block.type">
+        <div *ngSwitchCase="'text'" 
+        contenteditable="true"
+        (input)="onContentChange($event)"
+        (focus)="onFocus()"
+        (blur)="onBlur()"
+        (keydown)="handleKeydown($event)"
+        [innerHTML]="block.content">
+        </div>
+        
+        <h1 *ngSwitchCase="'heading1'"
+            contenteditable="true"
+            (input)="onContentChange($event)"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            (keydown)="handleKeydown($event)"
+            [innerHTML]="block.content">
+        </h1>
+        
+        <h2 *ngSwitchCase="'heading2'"
+            contenteditable="true"
+            (input)="onContentChange($event)"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            (keydown)="handleKeydown($event)"
+            [innerHTML]="block.content">
+        </h2>
+        
+        <h3 *ngSwitchCase="'heading3'"
+            contenteditable="true"
+            (input)="onContentChange($event)"
+            (focus)="onFocus()"
+            (blur)="onBlur()"
+            (keydown)="handleKeydown($event)"
+            [innerHTML]="block.content">
+        </h3>
+        
+        <!-- List items -->
+        <ul *ngSwitchCase="'bulleted-list'">
+          <li contenteditable="true"
+              (input)="onContentChange($event)"
+              (focus)="onFocus()"
+              (blur)="onBlur()"
+              (keydown)="handleKeydown($event)"
+              [innerHTML]="block.content">
+          </li>
+        </ul>
+        
+        <ol *ngSwitchCase="'numbered-list'">
+          <li contenteditable="true"
+              (input)="onContentChange($event)"
+              (focus)="onFocus()"
+              (blur)="onBlur()"
+              (keydown)="handleKeydown($event)"
+              [innerHTML]="block.content">
+          </li>
+        </ol>
+        
+        <pre *ngSwitchCase="'code'">
+          <code contenteditable="true"
+                (input)="onContentChange($event)"
+                (focus)="onFocus()"
+                (blur)="onBlur()"
+                (keydown)="handleKeydown($event)"
+                [innerHTML]="block.content">
+          </code>
+        </pre>
+        
+        <blockquote *ngSwitchCase="'quote'"
+                   contenteditable="true"
+                   (input)="onContentChange($event)"
+                   (focus)="onFocus()"
+                   (blur)="onBlur()"
+                   (keydown)="handleKeydown($event)"
+                   [innerHTML]="block.content">
+        </blockquote>
+        
+        <hr *ngSwitchCase="'divider'">
+      </div>
+    </div>
+    
+    <div class="block-controls" *ngIf="isFocused">
+      <button mat-icon-button (click)="addBlockAfter()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button (click)="deleteBlock()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+    
+    <div class="block-type-menu" *ngIf="isMenuOpen">
+      <mat-card>
+        <mat-selection-list [multiple]="false">
+          <mat-list-option *ngFor="let type of blockTypes"
+                          (click)="onTypeChange(type.type)">
+            <mat-icon matListIcon>{{type.icon}}</mat-icon>
+            <span matLine>{{type.label}}</span>
+          </mat-list-option>
+        </mat-selection-list>
+      </mat-card>
+    </div>
+  </div>

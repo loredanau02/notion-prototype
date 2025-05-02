@@ -1,11 +1,73 @@
-<mat-nav-list>
-  <h3>My Workspace</h3>
-  <mat-list-item *ngFor="let workspace of workspaces">
-    <mat-icon matListIcon>folder</mat-icon>
-    <h4 matLine>{{ workspace }}</h4>
-  </mat-list-item>
-  <mat-list-item (click)="addWorkspace()">
-    <mat-icon matListIcon>add</mat-icon>
-    <h4 matLine>Add New Workspace</h4>
-  </mat-list-item>
-</mat-nav-list>
+<!-- src/app/sidebar/sidebar.component.html -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <h2>Workspaces</h2>
+    <button mat-icon-button (click)="startAddingWorkspace()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  
+  <!-- New workspace form -->
+  <div class="new-workspace-form" *ngIf="isAddingWorkspace">
+    <mat-form-field appearance="outline">
+      <mat-label>Workspace Name</mat-label>
+      <input matInput [(ngModel)]="newWorkspaceName" placeholder="Enter workspace name">
+    </mat-form-field>
+    <div class="form-actions">
+      <button mat-button (click)="cancelAddingWorkspace()">Cancel</button>
+      <button mat-raised-button color="primary" (click)="submitNewWorkspace()">Create</button>
+    </div>
+  </div>
+  
+  <!-- Workspaces list -->
+  <mat-accordion>
+    <mat-expansion-panel 
+      *ngFor="let workspace of workspaces"
+      [expanded]="workspace.id === activeWorkspaceId"
+      (opened)="selectWorkspace(workspace.id)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ workspace.name }}
+        </mat-panel-title>
+        <mat-panel-description>
+          <button mat-icon-button (click)="deleteWorkspace($event, workspace.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      
+      <!-- Pages list -->
+      <mat-nav-list>
+        <mat-list-item 
+          *ngFor="let page of workspace.pages"
+          [class.active]="page.id === activePageId"
+          (click)="selectPage(page.id)"
+        >
+          <span class="page-emoji" *ngIf="page.emoji">{{ page.emoji }}</span>
+          <span class="page-title">{{ page.title }}</span>
+          <button mat-icon-button (click)="deletePage($event, workspace.id, page.id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+        
+        <mat-list-item (click)="startAddingPage()">
+          <mat-icon>add</mat-icon>
+          <span>New Page</span>
+        </mat-list-item>
+      </mat-nav-list>
+      
+      <!-- New page form -->
+      <div class="new-page-form" *ngIf="isAddingPage && workspace.id === activeWorkspaceId">
+        <mat-form-field appearance="outline">
+          <mat-label>Page Title</mat-label>
+          <input matInput [(ngModel)]="newPageName" placeholder="Enter page title">
+        </mat-form-field>
+        <div class="form-actions">
+          <button mat-button (click)="cancelAddingPage()">Cancel</button>
+          <button mat-raised-button color="primary" (click)="submitNewPage()">Create</button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
