@@ -1,0 +1,40 @@
+.app-container {
+  display: flex;
+  height: calc(100vh - 64px);
+  padding-top: 64px;
+  background-color: #f9fafc;
+  font-family: 'Roboto', sans-serif;
+}
+mat-toolbar {
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+}
+
+
+app-sidebar {
+  flex: 0 0 250px;
+  background-color: #fff;
+}
+
+app-workspace {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+/*TABLET*/
+@media (max-width: 768px) {
+  .app-container {
+    flex-direction: column;
+  }
+
+  app-sidebar {
+    width: 100%;
+    flex: none;
+  }
+
+  app-workspace {
+    padding: 10px;
+  }
+}

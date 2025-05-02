@@ -1,0 +1,11 @@
+<mat-nav-list>
+  <h3>My Workspace</h3>
+  <mat-list-item *ngFor="let workspace of workspaces">
+    <mat-icon matListIcon>folder</mat-icon>
+    <h4 matLine>{{ workspace }}</h4>
+  </mat-list-item>
+  <mat-list-item (click)="addWorkspace()">
+    <mat-icon matListIcon>add</mat-icon>
+    <h4 matLine>Add New Workspace</h4>
+  </mat-list-item>
+</mat-nav-list>

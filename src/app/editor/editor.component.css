@@ -1,0 +1,12 @@
+.editor {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: white;
+    padding: 10px;
+    height: 400px;
+  }
+
+  quill-editor {
+    height: 100%;
+  }
+  

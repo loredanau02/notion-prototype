@@ -1,0 +1,11 @@
+<div class="workspace">
+  <mat-card
+    class="block"
+    *ngFor="let block of blocks"
+    cdkDrag
+  >
+    <mat-card-content>
+      <app-editor></app-editor>
+    </mat-card-content>
+  </mat-card>
+</div>
